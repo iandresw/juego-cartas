@@ -1,11 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, View } from "react-native";
+import CartasProvider from "./src/provider/CartasProvider";
+import CartasComponent from "./src/components/CartasComponent";
+import HistorialComponent from "./src/components/HistorialComponent";
+import InicioComponent from "./src/components/InicioComponent";
+import { useState } from "react";
 
 export default function App() {
+  const [jugar, setJugar] = useState(false);
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <CartasProvider>
+        {!jugar && <InicioComponent onIniciar={() => setJugar(true)} />}
+        {jugar && (
+          <>
+            <CartasComponent />
+            <HistorialComponent />
+          </>
+        )}
+        <StatusBar style="auto" />
+      </CartasProvider>
     </View>
   );
 }
@@ -13,8 +28,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 60,
+    alignItems: "center",
+    backgroundColor: "#fff",
   },
 });
+
+
